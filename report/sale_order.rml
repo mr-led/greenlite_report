@@ -120,6 +120,7 @@
     <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_Right_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
@@ -151,7 +152,7 @@
   <para style="terp_default_8">[[repeatIn(objects,'o')]]</para>
   <para style="terp_default_8">[[ setLang(o.partner_id.lang) ]]</para>
   <!--pto_header>
-    <blockTable colWidths="70.0,261.0,70.0,50.0,85.0" repeatRows="1" style="Table4">
+    <blockTable colWidths="70.0,251.0,70.0,58.0,87.0" repeatRows="1" style="Table4">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Quantity</para>
@@ -181,8 +182,8 @@
     <para style="terp_default_8">
       <font color="white"> </font>
     </para-->
-    <para style="terp_header_Right">[[ o.state not in ['draft','sent'] and removeParentNode('para') ]] Quotation N° [[ o.name ]]</para>
-    <para style="terp_header_Right">[[ o.state in ['draft','sent'] and removeParentNode('para') ]] Order N° [[ o.name ]]</para>
+    <para style="terp_header_Right">[[ o.state not in ['draft','sent'] and removeParentNode('para') ]] Presupuesto N° [[ o.name ]]</para>
+    <para style="terp_header_Right">[[ o.state in ['draft','sent'] and removeParentNode('para') ]] Pedido N° [[ o.name ]]</para>
     <para style="terp_header_Right_Small">[[ formatLang(o.date_order,date = True) ]]</para>
 
 
@@ -313,7 +314,7 @@
       <font color="white"> </font>
     </para>
     <!-- blockTable colWidths="181.0,70.0,80.0,70.0,50.0,85.0" repeatRows="1" style="Table4" -->
-    <blockTable colWidths="30.0,306.0,60.0,50.0,50.0,50.0" repeatRows="1" style="Table4">
+    <blockTable colWidths="40.0,286.0,60.0,50.0,58.0,52.0" repeatRows="1" style="Table4">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Cant</para>
@@ -331,7 +332,7 @@
           <para style="terp_tblheader_Details_Right">Precio U.</para>
         </td>
 	<td>
-          <para style="terp_tblheader_Details_Centre">[[not show_discount(user.id) and removeParentNode('para') ]]Disc.(%)</para>
+          <para style="terp_tblheader_Details_Centre">% Desc</para>
 	</td>
         <td>
 	<!--
@@ -347,7 +348,7 @@
     <section>
       <para style="terp_default_1">[[repeatIn(o.order_line,'line')]]</para>
       <!-- blockTable colWidths="180.0,70.0,80.0,70.0,50.0,85.0" style="Table5" -->
-      <blockTable colWidths="30.0,305.0,60.0,50.0,50.0,50.0" style="Table5">
+      <blockTable colWidths="40.0,285.0,60.0,50.0,58.0,52.0" style="Table5">
         <tr>
           <td>
             <para style="terp_default_Centre_8">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty, digits=0) ]] </para>
@@ -368,12 +369,12 @@
             <para style="terp_default_Right_8">[[ formatLang(line.price_unit , digits=get_digits(dp='Product Price'))]]</para>
           </td>
 	  <td>
-            <para style="terp_default_Centre_8">[[show_discount(user.id) and formatLang(line.discount, digits=get_digits(dp='Discount')) or '']]</para>
+            <para style="terp_default_Centre_8">[[ formatLang(line.discount, digits=get_digits(dp='Discount')) or '']]</para>
 	  </td>
           <td>
 		<!--
             <para style="terp_default_Centre_8">[[show_discount(user.id) and formatLang(line.discount, digits=get_digits(dp='Discount')) or '']]</para> -->
-            <para style="terp_default_Centre_8">[[ ', '.join(map(lambda x: x.name, line.tax_id)) ]] </para>
+            <para style="terp_default_Centre_8">[[ ', '.join(map(lambda x: x.description, line.tax_id)) ]] </para>
             <!-- para style="terp_default_Centre_8">[[ ', '.join(map(lambda x: x.amount, line.tax_id)) ]] </para -->
 
           </td>
@@ -383,7 +384,7 @@
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="381.0,60.0,93.0" style="Table6">
+    <blockTable colWidths="381.0,60.0,101.0" style="Table6">
       <tr>
         <td>
           <para style="terp_default_8">
@@ -391,7 +392,7 @@
           </para>
         </td>
         <td>
-          <para style="terp_default_8">Net Total :</para>
+          <para style="terp_default_8">Total Neto:</para>
         </td>
         <td>
           <para style="terp_default_Right_8">[[ formatLang(o.amount_untaxed, dp='Account', currency_obj=o.pricelist_id.currency_id) ]]</para>
@@ -404,7 +405,7 @@
           </para>
         </td>
         <td>
-          <para style="terp_default_8">Taxes :</para>
+          <para style="terp_default_8">Impuestos :</para>
         </td>
         <td>
           <para style="terp_default_Right_8">[[ formatLang(o.amount_tax, dp='Account', currency_obj=o.pricelist_id.currency_id) ]]</para>
@@ -420,7 +421,7 @@
           <para style="terp_default_Bold_8">Total :</para>
         </td>
         <td>
-          <para style="terp_default_Right_8_Bold">[[ formatLang(o.amount_total, dp='Account', currency_obj=o.pricelist_id.currency_id) ]]</para>
+          <para style="terp_default_Bold_Right_8">[[ formatLang(o.amount_total, dp='Account', currency_obj=o.pricelist_id.currency_id) ]]</para>
         </td>
       </tr>
     </blockTable>
